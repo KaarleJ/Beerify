@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import viteLogo from '/vite.svg';
+import { getCount } from './services/api';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [serverCount, setServerCount] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getCount();
+      setServerCount(data.count);
+    };
+    fetchData();
+  }, []);
+
 
   return (
-    <>
+    <div className='flex flex-col min-h-screen items-center justify-start'>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          <img src={viteLogo} className="m-12" alt="Vite logo" />
         </a>
       </div>
-      <h1>Beerify</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <h1 className='text-blue font-sans text-2xl'>Beerify - initial app</h1>
+      <div className="m-5">
+        <button type='button' onClick={() => setCount((count) => count + 1)}>
+          Clientside count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Serverside count is {serverCount}
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
+
