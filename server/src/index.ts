@@ -8,6 +8,8 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+console.log("env: " + process.env.NODE_ENV);
+
 let count = 0;
 app.use(cors());
 app.use(express.static("dist"));
