@@ -35,6 +35,12 @@ jobs:
         cd server
         npm install
         npm run build
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-output
+        path: server/dist
   
 
   deploy:
@@ -44,7 +50,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      
       - uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-output
+          path: server/dist
+      
       - name: Deploy to fly.io
         run: |
           cd server
