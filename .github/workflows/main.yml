@@ -41,6 +41,7 @@ jobs:
       #with:
        # name: build-output
         #path: ./server/dist/
+    - uses: superfly/flyctl-actions/setup-flyctl@master
     - name: Deploy to fly.io
       run: |
         cd server
