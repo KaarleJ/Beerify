@@ -40,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: build-output
-        path: ./server/dist
+        path: ./server/dist/
   
 
   deploy:
@@ -57,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-output
-          path: ./server/dist
+          path: ./server/dist/
       
       - name: Deploy to fly.io
         run: |
