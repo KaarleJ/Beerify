@@ -2,11 +2,11 @@
   "name": "beerify-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "start": "cross-env NODE_ENV=production node dist/src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon src/index.ts",
     "build:ui": "rm -rf dist && npm run build && cd ../client/ && npm run build && cp -r dist ../server",
     "build:full": "npm run build:ui && npm run build",
