@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1713113837061,
+      "tag": "0000_sturdy_blue_marvel",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1713116379285,
+      "tag": "0001_military_liz_osborn",
+      "breakpoints": true
+    }
+  ]
+}
