@@ -45,6 +45,8 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     needs: build
     if: needs.build.result == 'success' && github.ref == 'refs/heads/main'
 
@@ -58,6 +60,21 @@ jobs:
         with:
           name: build-output
           path: ./server/dist/
+
+      # We need to install tsx so that we can run the migrations scripts directly.
+      - name: Install tsx
+        run: npm install -g tsx
+
+      - name: Generate migrations
+        run: |
+          cd server
+          npx drizzle-kit generate:pg
+
+      - name: Push migrations
+        run: |
+          cd server
+          npx tsx database/migrate.ts
+        
       
       - name: Deploy to fly.io
         run: |
