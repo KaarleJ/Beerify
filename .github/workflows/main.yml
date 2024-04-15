@@ -64,6 +64,7 @@ jobs:
       # We need to install dependencies for the migrations.
       - name: Install dependencies
         run: |
+          cd server
           npm install -g tsx
           npm install
 
