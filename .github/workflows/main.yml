@@ -61,9 +61,9 @@ jobs:
           name: build-output
           path: ./server/dist/
 
-      # We need to install tsx so that we can run the migrations scripts directly.
+      # We need to install tsx and drizzle-kit so that we can run the migrations scripts.
       - name: Install tsx
-        run: npm install -g tsx
+        run: npm install -g tsx drizzle-kit
 
       - name: Generate migrations
         run: |
