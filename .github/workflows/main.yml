@@ -61,10 +61,11 @@ jobs:
           name: build-output
           path: ./server/dist/
 
-      # We need to install drizzle-orm, drizzle-kit and tsx so that we can run the migrations
+      # We need to install dependencies for the migrations.
       - name: Install tsx
         run: |
           npm install drizzle-orm@0.30.8
+          npm install dotenv@16..4.5
           npm install -D tsx
           npm install -D drizzle-kit@0.20.14
 
