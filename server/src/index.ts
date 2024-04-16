@@ -11,16 +11,6 @@ let count = 0;
 app.use(cors());
 app.use(express.static('dist'));
 
-app.get('/', (_req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'), (error) => {
-    if (error) {
-      res.status(500).send(error);
-      if (error instanceof Error) {
-        console.error(error.message);
-      }
-    }
-  });
-});
 
 app.get('/count', (_req: Request, res: Response) => {
   res.send({ count });
@@ -30,6 +20,28 @@ app.get('/count', (_req: Request, res: Response) => {
 app.get('/users', async (_req: Request, res: Response) => {
   const us = await db.select().from(users);
   res.send(us);
+});
+
+app.get('*', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../index.html'), (error) => {
+    if (error) {
+      res.status(500).send(error);
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  });
+});
+
+app.get('/', (_req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../index.html'), (error) => {
+    if (error) {
+      res.status(500).send(error);
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  });
 });
 
 app.listen(port, () => {
