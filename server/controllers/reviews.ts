@@ -7,18 +7,18 @@ import { asc, eq } from 'drizzle-orm';
 
 const reviewRouter = Router();
 
-// Hakee kaikki arvostelut
+// Retrieve all reviews
 reviewRouter.get('/', async (req: Request, res: Response) => {
   try {
     const allReviews = await db.select().from(reviews).orderBy(asc(reviews.id));
     res.json(allReviews);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Virhe arvostelujen hakemisessa', error });
+    res.status(500).json({ message: 'Error fetching reviews', error });
   }
 });
 
-// Lisää uusi arvostelu
+// add a new review
 reviewRouter.post('/', async (req: Request, res: Response) => {
   try {
     const body = req.body;
@@ -32,11 +32,11 @@ reviewRouter.post('/', async (req: Request, res: Response) => {
     res.status(201);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Virhe arvostelun lisäämisessä', error });
+    res.status(500).json({ message: 'Error adding review', error });
   }
 });
 
-// Päivitä arvostelu
+// Update a review
 reviewRouter.put('/:id', async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
@@ -49,28 +49,28 @@ reviewRouter.put('/:id', async (req: Request, res: Response) => {
     if (updatedReview) {
       res.json(updatedReview);
     } else {
-      res.status(404).json({ message: 'Arvostelua ei löytynyt' });
+      res.status(404).json({ message: 'Review not found' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Virhe arvostelun päivittämisessä', error });
+    res.status(500).json({ message: 'Error updating review', error });
   }
 });
 
-// Poista arvostelu
+// Delete a review
 reviewRouter.delete('/:id', async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
     const deletedReview = await db.delete(reviews).where(eq(reviews.id, id));
 
     if (deletedReview) {
-      console.log('poistaminen onnistui');
+      console.log('Deleted a review successfully');
       res.status(204).end();
     } else {
-      res.status(404).json({ message: 'Arvostelua ei löytynyt' });
+      res.status(404).json({ message: 'Review not found' });
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Virhe arvostelun poistamisessa', error });
+    res.status(500).json({ message: 'Error deleting review', error });
   }
 });
 
