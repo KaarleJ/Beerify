@@ -27,9 +27,8 @@ reviewRouter.post('/', async (req: Request, res: Response) => {
       text: body.text,
       beerName: body.beerName,
       authorId: body.authorId,
-    });
-    console.log(newReview);
-    res.status(201);
+    }).returning();
+    res.status(201).send(newReview);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error adding review', error });
@@ -45,7 +44,7 @@ reviewRouter.put('/:id', async (req: Request, res: Response) => {
       rating: body.rating,
       text: body.text,
       beerName: body.beerName,
-    }).where(eq(reviews.id, id));
+    }).where(eq(reviews.id, id)).returning();
     if (updatedReview) {
       res.json(updatedReview);
     } else {
@@ -60,11 +59,10 @@ reviewRouter.put('/:id', async (req: Request, res: Response) => {
 reviewRouter.delete('/:id', async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id, 10);
-    const deletedReview = await db.delete(reviews).where(eq(reviews.id, id));
+    const deletedReview = await db.delete(reviews).where(eq(reviews.id, id)).returning();
 
-    if (deletedReview) {
-      console.log('Deleted a review successfully');
-      res.status(204).end();
+    if (deletedReview.length > 0) {
+      res.status(200).send(deletedReview);
     } else {
       res.status(404).json({ message: 'Review not found' });
     }
