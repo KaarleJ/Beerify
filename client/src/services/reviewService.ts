@@ -1,27 +1,41 @@
 import axios from 'axios';
+import { Review } from '../types';
 
-const url = process.env.NODE_ENV === 'production' ? '/reviews' : 'http://localhost:3000/api/reviews';
+const url =
+  process.env.NODE_ENV === 'production'
+    ? '/api/reviews'
+    : 'http://localhost:3000/api/reviews';
 
-interface Review {
-  rating: number;
-  text: string;
-  beerName: string;
-}
-
-const getAll = async () => {
+export const getReviews = async () => {
   const response = await axios.get(url);
-  console.log(response.data);
   return response.data;
 };
 
-const create = async (newObject: Review) => {
-  const response = await axios.post(url, newObject);
+export const createReview = async (review: Review) => {
+  const response = await axios.post<Review>(url, review, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   return response.data;
 };
 
-const remove = async (id: number) => {
-  const response = await axios.delete(`${url}/${id}`);
+export const updateReview = async (review: Review) => {
+  const response = await axios.put<Review>(`${url}/${review.id}`, review, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   return response.data;
 };
 
-export default { getAll, create, remove };
+export const removeReview = async (id: number) => {
+  const response = await axios.delete<Review>(`${url}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  return response.data;
+};

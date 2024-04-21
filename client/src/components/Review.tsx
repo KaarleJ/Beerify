@@ -1,15 +1,10 @@
-import React from 'react';
+import { Review as ReviewType } from '@/types';
 
 type ReviewProps = {
-  review: {
-    id: number;
-    rating: number;
-    text: string;
-    beerName: string;
-  };
+  review: ReviewType;
 };
 
-const Review: React.FC<ReviewProps> = ({ review, }) => {
+const Review = ({ review }: ReviewProps) => {
   return (
     <li>
       <strong>{review.beerName}</strong>

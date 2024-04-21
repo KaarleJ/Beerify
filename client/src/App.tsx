@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import NavBar from './components/NavBar';
 function App({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col justify-center items-center mt-50">
+    <div className='flex flex-col justify-center items-center'>
       <NavBar />
       <div className='mt-28'>{children}</div>
     </div>

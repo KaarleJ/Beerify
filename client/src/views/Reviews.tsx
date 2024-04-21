@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
-import Reviews from '../components/Reviews/Reviews';
-import reviewService from '../services/reviewService';
+import Reviews from '../components/Reviews';
+import { getReviews } from '../services/reviewService';
+import { Review } from '../types';
 
-type Review = {
-  id: number;
-  rating: number;
-  text: string;
-  beerName: string;
-}
 
 const ReviewsView: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -15,7 +10,7 @@ const ReviewsView: React.FC = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const initialReviews = await reviewService.getAll();
+        const initialReviews = await getReviews();
         setReviews(initialReviews);
       } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -27,8 +22,8 @@ const ReviewsView: React.FC = () => {
 
 
   return (
-    <div className="text-ellipsis max-w-3xl">
-      <h1>Beer Reviews</h1>
+    <div className="flex flex-col items-start">
+      <h1 className=''>Beer Reviews</h1>
       <Reviews reviews={reviews}/>
     </div>
   );
