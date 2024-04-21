@@ -5,6 +5,10 @@ import 'dotenv/config';
 
 const connectionString = process.env.DATABASE_URL;
 
+if (!connectionString) {
+  throw new Error('Please set DATABASE_URL in .env');
+}
+
 const sql = postgres(connectionString, { max: 1 });
 const db = drizzle(sql);
 
