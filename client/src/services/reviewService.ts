@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Review } from '../types';
+import { RawReview, Review, UpdReview } from '../types';
 
 const url =
   process.env.NODE_ENV === 'production'
@@ -11,8 +11,13 @@ export const getReviews = async () => {
   return response.data;
 };
 
-export const createReview = async (review: Review) => {
-  const response = await axios.post<Review>(url, review, {
+export const getSpecific = async (id: number) => {
+  const response = await axios.get(`${url}/${id}`);
+  return response.data;
+};
+
+export const createReview = async (review: RawReview) => {
+  const response = await axios.post<RawReview>(url, review, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -21,7 +26,7 @@ export const createReview = async (review: Review) => {
   return response.data;
 };
 
-export const updateReview = async (review: Review) => {
+export const updateReview = async (review: UpdReview) => {
   const response = await axios.put<Review>(`${url}/${review.id}`, review, {
     headers: {
       'Content-Type': 'application/json',

@@ -7,7 +7,7 @@ type ReviewProps = {
 const Review = ({ review }: ReviewProps) => {
   return (
     <li>
-      <strong>{review.beerName}</strong>
+      <h2>{review.beerName}</h2>
       <p>Rating: {review.rating}</p>
       <p>{review.text}</p>
     </li>

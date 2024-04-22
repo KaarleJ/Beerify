@@ -16,6 +16,23 @@ reviewRouter.get('/', async (_req: Request, res: Response) => {
   }
 });
 
+// Retrieve a specific review
+reviewRouter.get('/:id', async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const review = await db.select().from(reviews).where(eq(reviews.id, id));
+
+    if (review) {
+      res.json(review);
+    } else {
+      res.status(404).json({ message: 'Review not found' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error fetching review', error });
+  }
+});
+
 // add a new review
 reviewRouter.post('/', async (req: Request, res: Response) => {
   try {

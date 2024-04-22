@@ -12,6 +12,7 @@ import Error from './views/Error.tsx';
 import Login from './views/Login.tsx';
 import Register from './views/Register.tsx';
 import AuthProvider from './components/AuthProvider.tsx';
+import ReviewView from './views/Review.tsx';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />,
+  },
+  {
+    path:'/reviews/:id',
+    element: <ReviewView />,
+    errorElement: <Error />
   },
 ]);
 

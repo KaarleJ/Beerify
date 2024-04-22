@@ -10,3 +10,7 @@ export type User = {
   id: number;
   username: string;
 };
+
+export type RawReview = Omit<Review, 'author' | 'id'>;
+
+export type UpdReview = Omit<Review, 'author'>
