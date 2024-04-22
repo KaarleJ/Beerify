@@ -3,10 +3,10 @@ export type Review = {
   rating: number;
   text: string;
   beerName: string;
-  author: Author
-}
+  author: User;
+};
 
-export type Author = {
+export type User = {
   id: number;
   username: string;
-}
+};
