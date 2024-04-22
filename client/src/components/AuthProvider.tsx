@@ -20,7 +20,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (username: string, password: string) => {
     setIsLoading(true);
 
-    // Simulate an API call for authentication
     const auth = await apiLogin(username, password);
     const { token, user } = auth;
     localStorage.setItem('token', token);
@@ -33,13 +32,11 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = async (username: string, password: string) => {
     setIsLoading(true);
 
-    // Simulate an API call for authentication
     const auth = await apiRegister(username, password);
     const { token, user } = auth;
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
-
     setIsLoading(false);
   };
 
