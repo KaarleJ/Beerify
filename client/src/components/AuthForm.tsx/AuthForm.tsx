@@ -1,9 +1,6 @@
-import registerSchema from '@/lib/schemas/loginSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import useAuth from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,27 +13,38 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-const RegisterForm = () => {
-  const navigate = useNavigate();
-  const { register, isLoading } = useAuth();
+type FormSchema = z.ZodObject<
+  {
+    username: z.ZodString;
+    password: z.ZodString;
+  },
+  'strip',
+  z.ZodTypeAny,
+  {
+    username: string;
+    password: string;
+  },
+  {
+    username: string;
+    password: string;
+  }
+>;
 
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+interface AuthFormProps {
+  formSchema: FormSchema
+  onSubmit: (values: z.infer<FormSchema>) => void;
+  loading?: boolean;
+}
+
+const AuthForm = ({ formSchema, onSubmit, loading }: AuthFormProps) => {
+
+  const form = useForm<z.infer<FormSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
       password: '',
     },
   });
-
-  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
-    const { username, password } = values;
-    try {
-      await register(username, password);
-      navigate('/');
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <Form {...form}>
@@ -61,16 +69,16 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Password..." type='password' {...field} />
+                <Input placeholder="Password..." type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>Submit</Button>
+        <Button type="submit" disabled={loading}>Submit</Button>
       </form>
     </Form>
   );
 };
 
-export default RegisterForm;
+export default AuthForm;
