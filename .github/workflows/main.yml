@@ -76,7 +76,7 @@ jobs:
       - name: Push migrations
         run: |
           cd server
-          npx tsx database/migrate.ts
+          npx tsx src/database/migrate.ts
         
       
       - name: Deploy to fly.io
