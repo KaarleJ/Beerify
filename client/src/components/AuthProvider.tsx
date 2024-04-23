@@ -20,11 +20,16 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (username: string, password: string) => {
     setIsLoading(true);
 
-    const auth = await apiLogin(username, password);
-    const { token, user } = auth;
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
+    try {
+      const auth = await apiLogin(username, password);
+      const { token, user } = auth;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
+    } catch (error) {
+      setIsLoading(false);
+      throw new Error('Wrong credentials');
+    }
 
     setIsLoading(false);
   };
@@ -32,11 +37,17 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = async (username: string, password: string) => {
     setIsLoading(true);
 
-    const auth = await apiRegister(username, password);
-    const { token, user } = auth;
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
+    try {
+      const auth = await apiRegister(username, password);
+      const { token, user } = auth;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
+    } catch (error) {
+      setIsLoading(false);
+      throw new Error('Registering failed');
+    }
+
     setIsLoading(false);
   };
 
@@ -53,7 +64,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     register,
     isLoading,
   };
-
 
   return (
     <AuthContext.Provider value={authContextValue}>
