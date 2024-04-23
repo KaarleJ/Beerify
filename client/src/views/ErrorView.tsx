@@ -1,4 +1,4 @@
-const Error = () => {
+const ErrorView = () => {
   return (
     <div className="text-center text-primary">
       <h1>404</h1>
@@ -7,4 +7,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default ErrorView;

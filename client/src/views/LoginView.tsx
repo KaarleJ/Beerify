@@ -1,6 +1,6 @@
 import LoginForm from '@/components/AuthForm.tsx/LoginForm';
 
-const Login = () => {
+const LoginView = () => {
   return (
     <div>
       <h1>Login to Beerify</h1>
@@ -9,4 +9,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginView;

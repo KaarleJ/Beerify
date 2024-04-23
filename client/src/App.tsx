@@ -1,10 +1,12 @@
 import { ReactNode } from 'react';
 import NavBar from './components/NavBar';
+import { Toaster } from './components/ui/toaster';
 function App({ children }: { children: ReactNode }) {
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div>
       <NavBar />
-      <div className='mt-28'>{children}</div>
+      <div className='mt-20 flex flex-col items-center'>{children}</div>
+      <Toaster />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import RegisterForm from '@/components/AuthForm.tsx/RegisterForm';
 
-const Register = () => {
+const RegisterView = () => {
   return (
     <div>
       <h1>Register to Beerify</h1>
@@ -9,4 +9,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterView;

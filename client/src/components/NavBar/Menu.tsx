@@ -17,7 +17,7 @@ interface MenuProps {
 
 const Menu = ({ className, user, logout }: MenuProps) => {
   return (
-    <div className={` border px-2 pt-2 rounded-md mx-2 ${className}`}>
+    <div className={`border bg-background px-2 pt-2 rounded-md mx-2 ${className}`}>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <MenuIcon />
@@ -27,6 +27,7 @@ const Menu = ({ className, user, logout }: MenuProps) => {
             <>
               <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem><a href={`/reviews?author=${user.id}`} className='font-normal w-full h-full'>Your reviews</a></DropdownMenuItem>
               <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
             </>
           ) : (
