@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Request, Response, Router } from 'express';
 import { reviews } from '../database/schema';
 import { db } from '../database/db';
@@ -5,22 +6,39 @@ import { asc, eq, and } from 'drizzle-orm';
 
 const reviewRouter = Router();
 
-// Retrieve all reviews
-reviewRouter.get('/', async (_req: Request, res: Response) => {
+reviewRouter.get('/', async (req: Request, res: Response) => {
+  const authorId = req.query.authorId as string | undefined;
   try {
-    const allReviews = await db.select().from(reviews).orderBy(asc(reviews.id));
-    res.json(allReviews);
+    const result = authorId
+      ? await db.query.reviews.findMany({
+          where: eq(reviews.authorId, Number(authorId)),
+          with: {
+            author: true,
+          },
+          orderBy: asc(reviews.id),
+        })
+      : await db.query.reviews.findMany({
+          with: {
+            author: true,
+          },
+          orderBy: asc(reviews.id),
+        });
+    res.json(result);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error fetching reviews', error });
   }
 });
 
-// Retrieve a specific review
 reviewRouter.get('/:id', async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id, 10);
-    const review = await db.select().from(reviews).where(eq(reviews.id, id));
+    const id = Number(req.params.id);
+    const review = await db.query.reviews.findFirst({
+      where: eq(reviews.id, id),
+      with: {
+        author: true,
+      },
+    });
 
     if (review) {
       res.json(review);
@@ -33,7 +51,6 @@ reviewRouter.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// add a new review
 reviewRouter.post('/', async (req: Request, res: Response) => {
   try {
     const { rating, text, beerName } = req.body;
@@ -56,11 +73,12 @@ reviewRouter.post('/', async (req: Request, res: Response) => {
   }
 });
 
-// Update a review
 reviewRouter.put('/:id', async (req: Request, res: Response) => {
   const userId = req.user?.id as number;
   const id = Number(req.params.id);
   const { rating, text, beerName } = req.body;
+
+  console.log('body: ', req.body);
 
   try {
     const updatedReview = await db
@@ -73,8 +91,10 @@ reviewRouter.put('/:id', async (req: Request, res: Response) => {
       .where(and(eq(reviews.id, id), eq(reviews.authorId, userId)))
       .returning();
 
-    if (updatedReview) {
-      res.json(updatedReview);
+    console.log('updated: ', updatedReview);
+
+    if (updatedReview[0]) {
+      res.json(updatedReview[0]);
     } else {
       res.status(404).json({ message: 'Review not found' });
     }
@@ -84,7 +104,6 @@ reviewRouter.put('/:id', async (req: Request, res: Response) => {
   }
 });
 
-// Delete a review
 reviewRouter.delete('/:id', async (req: Request, res: Response) => {
   const userId = req.user?.id as number;
   const id = Number(req.params.id);

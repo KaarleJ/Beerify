@@ -12,5 +12,3 @@ export type User = {
 };
 
 export type RawReview = Omit<Review, 'author' | 'id'>;
-
-export type UpdReview = Omit<Review, 'author'>

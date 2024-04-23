@@ -3,47 +3,46 @@ import App from './App.tsx';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Landing from './views/Landing.tsx';
+import LandingView from './views/LandingView.tsx';
 import { ThemeProvider } from './components/ThemeProvider.tsx';
-import Reviews from './views/Reviews.tsx';
-import Create from './views/Create.tsx';
-import Edit from './views/Edit.tsx';
-import Error from './views/Error.tsx';
-import Login from './views/Login.tsx';
-import Register from './views/Register.tsx';
+import ReviewsView from './views/ReviewsView.tsx';
+import CreateView from './views/CreateView.tsx';
+import EditView from './views/EditView.tsx';
+import Error from './views/ErrorView.tsx';
+import LoginView from './views/LoginView.tsx';
+import RegisterView from './views/RegisterView.tsx';
 import AuthProvider from './components/AuthProvider.tsx';
-import ReviewView from './views/Review.tsx';
+import ReviewView from './views/ReviewView.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Landing />,
+    element: <LandingView />,
     errorElement: <Error />,
   },
   {
     path: '/reviews',
-    element: <Reviews />,
+    element: <ReviewsView />,
   },
   {
     path: '/create',
-    element: <Create />,
+    element: <CreateView />,
   },
   {
-    path: '/edit',
-    element: <Edit />,
+    path: '/edit/:id',
+    element: <EditView />,
   },
   {
     path: '/login',
-    element: <Login />,
+    element: <LoginView />,
   },
   {
     path: '/register',
-    element: <Register />,
+    element: <RegisterView />,
   },
   {
     path:'/reviews/:id',
     element: <ReviewView />,
-    errorElement: <Error />
   },
 ]);
 
