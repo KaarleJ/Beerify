@@ -1,11 +1,11 @@
 import express, { Express, Request, Response } from 'express';
 import path from 'path';
 import cors from 'cors';
-import reviewRouter from '../controllers/reviews';
+import reviewRouter from './controllers/reviews';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import auth from '../middleware/auth';
-import authRouter from '../controllers/auth';
+import auth from './middleware/auth';
+import authRouter from './controllers/auth';
 dotenv.config();
 
 const app: Express = express();
