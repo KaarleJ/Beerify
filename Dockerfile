@@ -29,7 +29,7 @@ RUN cd server && npm run build
 RUN cd server && npm prune --omit=dev
 
 # Final image
-FROM gcr.io/distroless/nodejs20-debian12
+FROM base
 
 COPY --from=build-backend /app/server /app
 
