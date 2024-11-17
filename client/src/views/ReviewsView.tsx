@@ -34,7 +34,7 @@ const ReviewsView = () => {
 
   return (
     <ul className="w-full rounded-md max-w-3xl ">
-      {authorId ? <h1>Reviews by you</h1> : <h1>Beerify reviews</h1>}
+      {authorId ? <h1>Reviews by you</h1> : <h1 className='px-6'>Beerify reviews</h1>}
       {reviews.map((review) => (
         <ReviewCard key={review.id} review={review} />
       ))}

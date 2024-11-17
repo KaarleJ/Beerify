@@ -6,15 +6,15 @@ import Menu from './Menu';
 const NavBar = () => {
   const { user, logout } = useAuth();
   return (
-    <nav className="py-5 px-56 flex flex-row items-center justify-between w-screen fixed top-0 backdrop-blur-sm border-b">
-      <div>
+    <nav className="py-3 pl-6 md:py-5 md:px-56 flex flex-row items-center justify-between w-screen fixed top-0 backdrop-blur-sm border-b">
+      <div className='w-full flex items-end justify-start gap-4 md:gap-16'>
         <Link
           href="/"
-          className="mx-10 text-primary/100 hover:text-primary/80 italic text-2xl"
+          className="text-primary/100 hover:text-primary/80 italic text-2xl"
         >
           Beerify
         </Link>
-        <Link href="/reviews">Reviews </Link>
+        <Link href="/reviews" className='text-left'>Reviews </Link>
 
         {user ? (
           <>

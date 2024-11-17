@@ -5,7 +5,7 @@ function App({ children }: { children: ReactNode }) {
   return (
     <div>
       <NavBar />
-      <div className='mt-20 flex flex-col items-center'>{children}</div>
+      <div className=' mt-16 md:mt-20 flex flex-col items-center'>{children}</div>
       <Toaster />
     </div>
   );
