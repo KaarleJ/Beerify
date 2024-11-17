@@ -7,59 +7,15 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Node 20
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-
-    - name: Build frontend
-      run: |
-        cd client
-        npm install
-        npm run build
-
-    - name: Copy frontend build to backend
-      run: |
-        mkdir -p server/dist
-        cp -r client/dist/* server/dist/
-
-    - name: Build backend
-      run: |
-        cd server
-        npm install
-        npm run build
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: build-output
-        path: ./server/dist/
-  
-
   deploy:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    needs: build
-    if: needs.build.result == 'success' && github.ref == 'refs/heads/main'
 
     steps:
       - uses: actions/checkout@v4
       
       - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build-output
-          path: ./server/dist/
 
       # We need to install dependencies for the migrations.
       - name: Install dependencies
@@ -77,11 +33,9 @@ jobs:
         run: |
           cd server
           npx tsx src/database/migrate.ts
-        
       
       - name: Deploy to fly.io
-        run: |
-          cd server
+        run: 
           flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
