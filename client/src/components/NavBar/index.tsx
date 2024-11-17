@@ -6,7 +6,7 @@ import Menu from './Menu';
 const NavBar = () => {
   const { user, logout } = useAuth();
   return (
-    <nav className="p-5 flex flex-row items-center justify-around w-screen fixed top-0 backdrop-blur-sm border-b">
+    <nav className="py-5 px-56 flex flex-row items-center justify-between w-screen fixed top-0 backdrop-blur-sm border-b">
       <div>
         <Link
           href="/"
