@@ -1,0 +1,19 @@
+# ignore dependencies
+**/node_modules
+
+# ignore build files
+server/dist
+client/dist
+
+# ignore unncecessary config files
+**/.env/*
+**/.eslingtignore
+**/.eslintrc.js
+**/.gitignore
+**/.prettierrc.json
+**/.prettierignore
+
+# ignore root files
+.github
+README.md
+fly.toml
